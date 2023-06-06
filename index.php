@@ -1,8 +1,8 @@
-<?php
+<!-- php
 $news = query("SELECT * FROM news_tubes");
 
 
-?>
+?> -->
 
 <!doctype html>
 <html lang="en">
@@ -34,9 +34,9 @@ $news = query("SELECT * FROM news_tubes");
                 NEWS
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#HOTVIRAL">VIRAL</a></li>
-                <li> <a class="dropdown-item" href="#TERBARU">KOREAN</a></li>
-                <li><a class="dropdown-item" href="#VIRAL">FILM & MUSIC</a></li>
+                <li><a class="dropdown-item" href="kategoriviral.php">VIRAL</a></li>
+                <li> <a class="dropdown-item" href="kategorikorea.php">KOREA</a></li>
+                <li><a class="dropdown-item" href="kategoriend.php">FILM & MUSIC</a></li>
             </ul>
             </li>
             <li class="nav-item">
@@ -221,7 +221,7 @@ $news = query("SELECT * FROM news_tubes");
             <!-- Article data -->
             <div class="row mb-3">
                 <div class="col-6">
-                <a href="" class="text-danger">
+                <a href="kategoriviral.php" class="text-danger">
                     <i class="fas fa-chart-pie"></i>
                     VIRAL
                 </a>

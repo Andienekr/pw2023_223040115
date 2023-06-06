@@ -1,3 +1,50 @@
+<?php
+
+require('functions.php');
+
+
+if( isset($_SESSION["login"]) ) {
+    header('Location: admin/admin.php');
+}
+// var_dump($_SESSION); die();
+
+if( isset($_POST["submit"]) ) {
+
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $result = mysqli_query($conn, "SELECT * FROM login WHERE `username` = '{$username}'");
+
+    if(mysqli_num_rows($result) >= 1) {
+        $row = mysqli_fetch_assoc($result);
+
+        if(password_verify($password, $row["password"]) ) {
+
+            $_SESSION['user'] = $row;
+            
+            if($row['level'] == 'admin'){
+                header('Location: ../tubes/admin/admin.php');
+            } else {
+                header('Location: ../tubes/user/user.php');
+            }
+            exit;
+
+        } else {
+            echo "<script>alert('Username dan password salah!')</script>";
+        }
+
+        
+    }
+    echo "<script>alert('Username dan password salah!')</script>";
+}
+
+
+
+?>
+
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -28,18 +75,14 @@
                 NEWS
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#HOTVIRAL">VIRAL</a></li>
-                <li> <a class="dropdown-item" href="#TERBARU">KOREAN</a></li>
-                <li><a class="dropdown-item" href="#VIRAL">FILM & MUSIC</a></li>
+            <li><a class="dropdown-item" href="kategoriviral.php">VIRAL</a></li>
+                    <li> <a class="dropdown-item" href="kategorikorea.php">KOREA</a></li>
+                    <li><a class="dropdown-item" href="kategoriend.php">FILM & MUSIC</a></li>
             </ul>
             </li>
             <li class="nav-item">
             </li>
         </ul>
-        <form class="d-flex" role="Login">
-            <a href="login.php" class="btn btn-outline-success me-2" type="button">Login</a>
-            <a href="Registrasi.php" class="btn btn-sm btn-outline-secondary" type="button">Register</a>
-            </form>
         </div>
     </div>
 </nav>
@@ -54,12 +97,13 @@
     <body>
         <div class="container">
           <h1>Log in</h1>
-            <form>
+            <form action="" method="post">
                 <label>Username</label><br>
-                <input type="text"><br>
+                <input type="text" name="username"><br>
                 <label>Password</label><br>
-                <input type="password"><br>
-                <a href="admin/admin.php" >Login</a>
+                <input type="password" name="password"><br>
+                <input type="submit" name="submit">
+                <!-- <a href="admin/admin.php" >Login</a> -->
             </form>
         </div>     
     </body>
@@ -118,8 +162,8 @@ body{
 
 
 <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-  © 2023 Andien:
-  <a class="text-dark" href="mailto:andien@gmail.com">Andien@gmail.com</a>
+  © 2023 
+  <a class="text-dark" href="index.php">Tribun Unpas</a>
 </div>
 </footer>
 

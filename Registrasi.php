@@ -1,3 +1,25 @@
+<?php
+require('functions.php');
+
+if(isset($_POST["registrasi"])) {
+
+    if(registrasi($_POST) > 0) {
+        echo "
+            <script>
+                alert('Register Succes');
+                document.location.href = 'login.php';
+            </script>
+        ";
+    } else {
+        return mysqli_error($conn);
+    }
+}
+
+
+
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -5,6 +27,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tribun Unpas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    
+    
+<style>
+    body{
+        height: 100vh;
+        background-image: url (Masukkan link);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .container{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        padding: 20px 25px;
+        width: 300px;
+
+        background-color: rgba(0,0,0,.7);
+        box-shadow: 0 0 10px rgba(255,255,255,.3);}
+
+    .container h1{
+        text-align: left;
+        color: #fafafa;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        border-bottom: 4px solid #2979ff;
+    }
+    .container label{
+        text-align: left;
+        color: #90caf9;
+    }
+    .container form input{
+        width: calc(100% - 20px);
+        padding: 8px 10px;
+        margin-bottom: 15px;
+        border: none;
+        background-color: transparent;
+        border-bottom: 2px solid #2979ff;
+        color: #fff;
+        font-size: 20px;
+    }
+    .container form button{
+        width: 100%;
+        padding: 5px 0;
+        border: none;
+        background-color:#2979ff;
+        font-size: 18px;
+        color: #fafafa;
+    }
+
+    button a{
+        color: white;
+    }
+    </style>
+
   </head>
   <body>
   <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -28,27 +106,14 @@
                 NEWS
             </a>
             <ul class="dropdown-menu">
-                <li>
-                <a class="dropdown-item" href="#">VIRAL
-                </a>
-                </li>
-                <li>
-                <a class="dropdown-item" href="#">KOREAN
-                </a>
-                </li>
-                <li>
-                <a class="dropdown-item" href="#">FILM & MUSIC
-                </a>
-                </li>
+            <li><a class="dropdown-item" href="kategoriviral.php">VIRAL</a></li>
+                    <li> <a class="dropdown-item" href="kategorikorea.php">KOREA</a></li>
+                    <li><a class="dropdown-item" href="kategoriend.php">FILM & MUSIC</a></li>
             </ul>
             </li>
             <li class="nav-item">
             </li>
         </ul>
-        <form class="d-flex" role="Login">
-            <a href="login.php" class="btn btn-outline-success me-2" type="button">Login</a>
-            <a href="Registrasi.php" class="btn btn-sm btn-outline-secondary" type="button">Register</a>
-            </form>
         </div>
     </div>
 </nav>
@@ -62,74 +127,23 @@
     <body>
         <div class="container">
           <h1>Registrasi</h1>
-            <form>
+            <form action="" method="post">
                 <label>Username</label><br>
-                <input type="text"><br>
+                <input type="text" name="username" id="username"><br>
                 <label>Password</label><br>
-                <input type="password"><br>
-                <label>Nomor aktif</label><br>
-                <input type="Text"><br>
-                <a href="login.php" >Daftar</a>
+                <input type="password" name="password" id="password"><br>
+                <button type="submit" name="registrasi" id="registrasi">Daftar</button>
             </form>
         </div>     
     </body>
 </html>
-<style>
-body{
-    height: 100vh;
-    background-image: url (Masukkan link);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-.container{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    padding: 20px 25px;
-    width: 300px;
-
-    background-color: rgba(0,0,0,.7);
-    box-shadow: 0 0 10px rgba(255,255,255,.3);}
-
-.container h1{
-    text-align: left;
-    color: #fafafa;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-    border-bottom: 4px solid #2979ff;
-}
-.container label{
-    text-align: left;
-    color: #90caf9;
-}
-.container form input{
-    width: calc(100% - 20px);
-    padding: 8px 10px;
-    margin-bottom: 15px;
-    border: none;
-    background-color: transparent;
-    border-bottom: 2px solid #2979ff;
-    color: #fff;
-    font-size: 20px;
-}
-.container form button{
-    width: 100%;
-    padding: 5px 0;
-    border: none;
-    background-color:#2979ff;
-    font-size: 18px;
-    color: #fafafa;
-}
-    </style>
 
 <footer class="bg-light text-lg-start fixed-bottom">
 
 
 <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-  © 2023 andien:
-  <a class="text-dark" href="mailto:adnien@gmail.com">andien@gmail.com</a>
+  © 2023 
+  <a class="text-dark" href="index.php">Tribun Unpas</a>
 </div>
 </footer>
 
