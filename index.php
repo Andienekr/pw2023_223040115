@@ -1,8 +1,26 @@
-<!-- php
-$news = query("SELECT * FROM news_tubes");
+<?php
+$conn = mysqli_connect('localhost', 'root', '', 'tubes_database');
+
+function query($data) {
+    global $conn;
+
+    $result = mysqli_query($conn, $data);
+    $rows = [];
+
+    while($row = mysqli_fetch_assoc($result)) {
+        $rows[] = $row;
+    }
+    return $rows;
+}
+$kategori = query("SELECT * FROM kategori");
+
+$newsviral = query("SELECT * FROM news_tubes WHERE kategori = '1' LIMIT 0,4");
+$newsmusic = query("SELECT * FROM news_tubes WHERE kategori = '2' LIMIT 0,4");
+$newskorea = query("SELECT * FROM news_tubes WHERE kategori = '3' LIMIT 0,4");
 
 
-?> -->
+
+?>
 
 <!doctype html>
 <html lang="en">
@@ -34,10 +52,10 @@ $news = query("SELECT * FROM news_tubes");
                 NEWS
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="kategoriviral.php">VIRAL</a></li>
-                <li> <a class="dropdown-item" href="kategorikorea.php">KOREA</a></li>
-                <li><a class="dropdown-item" href="kategoriend.php">FILM & MUSIC</a></li>
-            </ul>
+                <?php foreach($kategori as $kategori) :?>
+                <li><a class="dropdown-item" href="kategori.php?kategori=<?= $kategori['id_kategori'] ?>"><?= strtoupper($kategori['nama_kategori']) ?></a></li>
+                <?php endforeach ?>
+            </ul>   
             </li>
             <li class="nav-item">
             </li>
@@ -149,60 +167,20 @@ $news = query("SELECT * FROM news_tubes");
             <hr />
 
             <!-- News 1 -->
-            <a href="musicfilm1.php" class="text-dark">
-                <div class="row mb-4 border-bottom pb-2">
-                    <div class="col-3">
-                        <img src="https://akcdn.detik.net.id/visual/2018/11/15/d49f1592-9a1c-446d-98c5-086e67396799_169.jpeg?w=900&q=90"
-                        class="img-fluid shadow-1-strong rounded" alt="Marvel" />
-                    </div>
-
-                    <div class="col-9">
-                        <p class="mb-2"><strong>Rincian Lengkap Harga Tiket dan Seating Plan Konser Coldplay 15 November 2023</strong></p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- News 2-->
-            <a href="musicfilm2.php" class="text-dark">
+            <?php foreach($newsmusic as $new) : ?>
+            <a href="detail.php?id=<?= $new['id'] ?>" class="text-dark">
                 <div class="row mb-4 border-bottom pb-2">
                 <div class="col-3">
-                    <img src="https://akcdn.detik.net.id/visual/2023/04/28/guardians-of-the-galaxy-vol-3_169.webp?w=900&q=90"
-                    class="img-fluid shadow-1-strong rounded" alt="Reza Rahardian dan Acha s." />
+                    <img src="admin/img/<?= $new["foto"] ?>"
+                    class="img-fluid shadow-1-strong rounded" alt="United Kingdom" />
                 </div>
 
                 <div class="col-9">
-                    <p class="mb-2"><strong>Review 'Guardians of The Galaxy Vol 3', Akhir Kisah yang Menguras Air Mata</strong></p>
+                    <p class="mb-2"><strong><?= $new["judul"] ?></strong></p>
                 </div>
                 </div>
             </a>
-
-            <!-- News 3-->
-            <a href="musicfilm3.php" class="text-dark">
-                <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                    <img src="https://akcdn.detik.net.id/visual/2022/09/22/1422381182_169.jpeg?w=900&q=90"
-                    class="img-fluid shadow-1-strong rounded" alt="Ahmad Dhani" />
-                </div>
-
-                <div class="col-9">
-                    <p class="mb-2"><strong>Jadi Ariel di 'The Little Mermaid', Halle Bailey: Aku Menangis Tak Percaya</strong></p>
-                </div>
-                </div>
-            </a>
-
-            <!-- News 4-->
-            <a href="musicfilm4.php" class="text-dark">
-                <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                    <img src="https://akcdn.detik.net.id/visual/2023/03/14/blackpink-8_169.jpeg?w=900&q=90"
-                    class="img-fluid shadow-1-strong rounded" alt="Pildun" />
-                </div>
-
-                <div class="col-9">
-                    <p class="mb-2"><strong>Kelar Konser di Indonesia, BLACKPINK Ngebut Siapkan Penampilan di Coachella</strong></p>
-                </div>
-                </div>
-            </a>
+            <?php endforeach ; ?>
             </div>
         </div>
 
@@ -236,60 +214,21 @@ $news = query("SELECT * FROM news_tubes");
             <hr />
 
             <!-- News 1 -->
-            <a href="viral1.php" class="text-dark">
+            <?php foreach($newsviral as $new) : ?>
+            <a href="detail.php?id=<?= $new['id'] ?>" class="text-dark">
                 <div class="row mb-4 border-bottom pb-2">
                 <div class="col-3">
-                    <img src="https://akcdn.detik.net.id/visual/2023/05/09/rizky-febian-5_169.jpeg?w=900&q=90"
+                    <img src="admin/img/<?= $new["foto"] ?>"
                     class="img-fluid shadow-1-strong rounded" alt="United Kingdom" />
                 </div>
 
                 <div class="col-9">
-                    <p class="mb-2"><strong>Respons Ayah Mahalini Soal Perbedaan Agama Usai Anak Dilamar Rizky Febian</strong></p>
+                    <p class="mb-2"><strong><?= $new["judul"] ?></strong></p>
                 </div>
                 </div>
             </a>
+            <?php endforeach ; ?>
 
-            <!-- News 2 -->
-            <a href="viral2.php" class="text-dark">
-                <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                    <img src="https://assets.hops.id/crop/0x0:0x0/750x500/webp/photo/2022/12/20/1179429001.jpg"
-                    class="img-fluid shadow-1-strong rounded" alt="Secret" />
-                </div>
-
-                <div class="col-9">
-                    <p class="mb-2"><strong>Heboh Video Syur 47 Detik Mirip Rebecca Klopper</strong></p>
-                </div>
-                </div>
-            </a>
-
-            <!-- News 3-->
-            <a href="viral3.php" class="text-dark">
-                <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                    <img src="https://awsimages.detik.net.id/community/media/visual/2023/05/18/potret-desta-dan-natasha-rizki-6_169.jpeg?w=1200"
-                    class="img-fluid shadow-1-strong rounded" alt="mesir" />
-                </div>
-
-                <div class="col-9">
-                    <p class="mb-2"><strong>Bukan karena Orang Ketiga, Ini 4 Fakta Desta Gugat Cerai Istri</strong></p>
-                </div>
-                </div>
-            </a>
-
-            <!-- News 4-->
-            <a href="viral4.php" class="text-dark">
-                <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                    <img src="https://t-2.tstatic.net/solo/foto/bank/images/Raffi-Ahmad-dan-Nagita-Slavina-liburan-ke-Jepang.jpg"
-                    class="img-fluid shadow-1-strong rounded" alt="berita indonesia" />
-                </div>
-
-                <div class="col-9">
-                    <p class="mb-2"><strong>Gemas sama Cipung, Klub Bola Ini Undang Raffi Ahmad Sekeluarga ke Jepang</strong></p>
-                </div>
-                </div>
-            </a>
             </div>
         </div>
 
@@ -324,60 +263,20 @@ $news = query("SELECT * FROM news_tubes");
             <hr />
 
             <!-- News 1 -->
-            <a href="korea1.php" class="text-dark">
+            <?php foreach($newskorea as $new) : ?>
+            <a href="detail.php?id=<?= $new['id'] ?>" class="text-dark">
                 <div class="row mb-4 border-bottom pb-2">
                 <div class="col-3">
-                    <img src="https://akcdn.detik.net.id/visual/2021/08/25/lucas-wayv-lucas-nct-1_169.png?w=650"
-                    class="img-fluid shadow-1-strong rounded" alt="film kriminal" />
+                    <img src="admin/img/<?= $new["foto"] ?>"
+                    class="img-fluid shadow-1-strong rounded" alt="United Kingdom" />
                 </div>
 
                 <div class="col-9">
-                    <p class="mb-2"><strong>Lucas Tulis Surat Usai Umumkan Angkat Kaki dari NCT dan WayV</strong></p>
+                    <p class="mb-2"><strong><?= $new["judul"] ?></strong></p>
                 </div>
                 </div>
             </a>
-
-            <!-- News 2 -->
-            <a href="korea2.php" class="text-dark">
-                <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                    <img src="https://akcdn.detik.net.id/visual/2023/02/19/baby-monster_169.webp?w=900&q=90"
-                    class="img-fluid shadow-1-strong rounded" alt="nct" />
-                </div>
-
-                <div class="col-9">
-                    <p class="mb-2"><strong>YG Entertainment Umumkan 7 Anggota Resmi Baby Monster</strong></p>
-                </div>
-                </div>
-            </a>
-
-            <!-- News 3-->
-            <a href="korea3.php" class="text-dark">
-                <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                    <img src="https://assets.ayobandung.com/crop/0x112:1366x1145/750x500/webp/photo/2023/05/21/twitter-biyaahgh-719416642.jpg"
-                    class="img-fluid shadow-1-strong rounded" alt="" />
-                </div>
-
-                <div class="col-9">
-                    <p class="mb-2"><strong>Buat Fans Geram! Jeno NCT Diberi Makanan Anjing oleh Salah Satu Penonton di Kuala Lumpur</strong></p>
-                </div>
-                </div>
-            </a>
-
-            <!-- News 4-->
-            <a href="korea4.php" class="text-dark">
-                <div class="row mb-4 border-bottom pb-2">
-                <div class="col-3">
-                    <img src="https://akcdn.detik.net.id/visual/2023/05/18/drama-korea-dr-romantic-3-1_169.png?w=900&q=90"
-                    class="img-fluid shadow-1-strong rounded" alt="Perdana Botanical Garden" />
-                </div>
-
-                <div class="col-9">
-                    <p class="mb-2"><strong>5 Drama Korea Rating Tertinggi Minggu Ketiga Mei 2023</strong></p>
-                </div>
-                </div>
-            </a>
+            <?php endforeach ; ?>
             </div>
             <footer class="bg-light text-lg-start fixed-bottom">
 

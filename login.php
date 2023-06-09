@@ -75,10 +75,10 @@ if( isset($_POST["submit"]) ) {
                 NEWS
             </a>
             <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="kategoriviral.php">VIRAL</a></li>
-                    <li> <a class="dropdown-item" href="kategorikorea.php">KOREA</a></li>
-                    <li><a class="dropdown-item" href="kategoriend.php">FILM & MUSIC</a></li>
-            </ul>
+                <?php foreach($kategori as $kategori) :?>
+                <li><a class="dropdown-item" href="kategori.php?kategori=<?= $kategori['id_kategori'] ?>"><?= strtoupper($kategori['nama_kategori']) ?></a></li>
+                <?php endforeach ?>
+            </ul>   
             </li>
             <li class="nav-item">
             </li>

@@ -1,16 +1,18 @@
 <?php
 require('../functions.php');
 
-$news = query("SELECT * FROM news_tubes");
+
+$id = $_GET['id'];
+$new = query("SELECT * FROM news_tubes WHERE `id` = '{$id}'")[0];
 
 if(empty($_SESSION)) {
   header('Location: ../'); exit;
 }
 
-if(isset($_POST["upload"])) {
+if(isset($_POST["submit"])) {
   // var_dump($_POST);
   // var_dump($_FILES); die();
-  if(add_news($_POST) > 0){
+  if(edit($_POST) > 0){
     echo "
         <script>
             alert('Succes');
@@ -51,7 +53,7 @@ $kategori = query("SELECT * FROM kategori");
 }
 
 .wrapper{
-	width:100%;
+	width: 100%;
 	height: 100%;
 }
 .navbar{
@@ -133,70 +135,37 @@ ul li a .fa-angle-down{
         <menu>
           <ul class="menu-content">
             <li><a href="#"><i class="fa fa-home"></i> Dashboard</a></li>
+            <li>
+              <a href="index.php user"><i class="fa fa-cube"></i> <span>Membership</span></a>
+            </li>
             <li><a href="../logout.php"><i class="fa fa-sign-out"></i> <span>Log out</span></a></li>
           </ul>
         </menu>
       </aside>
       <section class="content">
         <div class="inner">
-        <form action="" method="post" enctype="multipart/form-data">
-            <table class="table" id="myTable">
-            <thead>
-              <tr>
-                <th scope="col">NO</th>
-                <th scope="col">Foto</th>
-                <th scope="col">Judul</th>
-                <th scope="col">Kategori</th>
-                <th scope="col">Dekripsi</th>
-                <th scope="col">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php $i = 1; foreach($news as $new) : ?>
-              <tr>
-                <th scope="row"><?= $i++ ?></th>
-                <td>
-                  <img src="img/<?= $new["foto"]; ?>" style="width: 100%;">
-                </td>
-                <td><?= $new["judul"]; ?></td>
-                <td><?= $new["kategori"]; ?></td>
-                <td><?= substr(html_entity_decode($new["deskripsi"]), 0, 100); ?></td>
-
-                <td style= "display:flex;" >
-
-                  <a href="delete.php?id=<?= $new["id"] ?>" class= "btn btn-warning btn-sm confirm">HAPUS</a> |
-                  <a href="ubah.php?id=<?= $new["id"]; ?>" class= "btn btn-danger btn-sm">UBAH</a>
-            
-                </td>
-              </tr>
-              <?php endforeach ; ?>
-              
-              
-              <tr>
-                  <th scope="row">#</th>
-                  <td>
-                    <input class="form-control" type="file" name="foto" id="formFile" style="max-width: 250px;">
-                  </td>
-                  <td>
-                    <input type="text" name="judul" id="judul" placeholder="Masukkan Judul">
-                  </td>
-                  <td>
-                    <select name="kategori" id="kategori">
+            <form action="" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<?= $id ?>">
+                <div class="form-group">
+                    <label for="">Foto</label>
+                    <input type="file" class="form-control" id="" placeholder="Foto" value="<?= $new['foto'] ?>" name="foto">
+                </div>
+                <div class="form-group">
+                    <label for="">Judul</label>
+                    <input type="text" class="form-control" id="" placeholder="Judul" value="<?= $new['judul'] ?>" name="judul">
+                </div>
+                <select class="form-select" name="kategori" id="kategori">
                       <?php foreach($kategori as $k) :?>
-                      <option value="<?= $k['id_kategori'] ?>"><?= $k['nama_kategori'] ?></option>
+                      <option value="<?= $k['id_kategori'] ?>" <?php $new['kategori'] === $k['id_kategori'] ? 'selected' : ''; ?> ><?= $k['nama_kategori'] ?></option>
                       <?php endforeach; ?>
                     </select>
-                  </td>
-                  <td>
-                    <input type="text" name="deskripsi" id="deskripsi" placeholder="Masukkan Deskripsi">
-                  </td>
-                  <td>
-                  <button type="submit" name="upload" id="upload" class="btn btn-primary">Upload</button>
-                  </td>
-              </tr>
-              
-            </tbody>
-          </table>
+                <div class="form-group">
+                    <label for="">Deskripsi</label>
+                    <textarea class="form-control" id="" cols="30" rows="5" placeholder="Deskripsi" name="deskripsi"><?= $new['deskripsi'] ?></textarea>
+                </div>
+                
+                <input type="submit" name="submit" value="Simpan" class="btn btn-primary">
+            </form>
           </form>
         </div>
       </section>
