@@ -1,17 +1,6 @@
 <?php
-$conn = mysqli_connect('localhost', 'root', '', 'tubes_database');
+require 'functions.php';
 
-function query($data) {
-    global $conn;
-
-    $result = mysqli_query($conn, $data);
-    $rows = [];
-
-    while($row = mysqli_fetch_assoc($result)) {
-        $rows[] = $row;
-    }
-    return $rows;
-}
 $kategori = query("SELECT * FROM kategori");
 
 $newsviral = query("SELECT * FROM news_tubes WHERE kategori = '1' LIMIT 0,4");

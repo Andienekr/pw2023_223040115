@@ -6,13 +6,14 @@ session_start();
 function query($data) {
     global $conn;
     
-    $result = mysqli_query($conn,$data);
+    $result = mysqli_query($conn,$data) or die(mysqli_error($conn));
     $rows = [];
 
     while($row = mysqli_fetch_assoc($result)) {
         $rows[] = $row;
     }
         return $rows;
+
 }
 
 function add_news($data) {
@@ -29,7 +30,7 @@ function add_news($data) {
                     VALUES 
                     (NULL, '$foto', '$judul', '$kategori', '$deskripsi')";
     
-    mysqli_query($conn, $upload);
+    mysqli_query($conn, $upload)or die(mysqli_error($conn));
     return mysqli_affected_rows($conn);
 }
 
@@ -64,7 +65,7 @@ function upload_news() {
 function delete($id) {
     global $conn;
 
-    mysqli_query($conn, "DELETE FROM `news_tubes` WHERE `news_tubes`.`id` = $id");
+    mysqli_query($conn, "DELETE FROM `news_tubes` WHERE `news_tubes`.`id` = $id")or die(mysqli_error($conn));
 
     return mysqli_affected_rows($conn);
 }
@@ -83,7 +84,7 @@ function registrasi($data) {
                             VALUES 
                             ('$username', '$password', 'user')";
 
-    mysqli_query($conn, $register);
+    mysqli_query($conn, $register)or die(mysqli_error($conn));
 
     return mysqli_affected_rows($conn);
 
@@ -117,7 +118,7 @@ function edit($data)
                 `deskripsi` = '{$deskripsi}'
                 WHERE `id`  = '{$id}'";
     
-    mysqli_query($conn, $upload);
+    mysqli_query($conn, $upload)or die(mysqli_error($conn));
     return mysqli_affected_rows($conn);   
 }
 
