@@ -19,7 +19,6 @@ $newsmusic = query("SELECT * FROM news_tubes WHERE kategori = '2' LIMIT 0,4");
 $newskorea = query("SELECT * FROM news_tubes WHERE kategori = '3' LIMIT 0,4");
 
 
-
 ?>
 
 <!doctype html>
@@ -151,10 +150,10 @@ $newskorea = query("SELECT * FROM news_tubes WHERE kategori = '3' LIMIT 0,4");
             <!-- news film and music-->
             <div class="row mb-3">
                 <div class="col-6">
-                <a href="" class="text-info">
+                <p class="text-info">
                     <i class="fas fa-plane"></i>
                     FILM & MUSIC
-                </a>
+                </p>
                 </div>
             </div>
 
@@ -199,10 +198,10 @@ $newskorea = query("SELECT * FROM news_tubes WHERE kategori = '3' LIMIT 0,4");
             <!-- Article data -->
             <div class="row mb-3">
                 <div class="col-6">
-                <a href="kategoriviral.php" class="text-danger">
+                <p class="text-danger">
                     <i class="fas fa-chart-pie"></i>
                     VIRAL
-                </a>
+            </p>
                 </div>
             </div>
 
@@ -247,10 +246,10 @@ $newskorea = query("SELECT * FROM news_tubes WHERE kategori = '3' LIMIT 0,4");
             <!-- article data-->
             <div class="row mb-3">
                 <div class="col-6">
-                <a href="" class="text-warning">
+                <p class="text-warning">
                     <i class="fas fa-code"></i>
                     KOREA
-                </a>
+            </p>
                 </div>
             </div>
 

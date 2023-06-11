@@ -89,6 +89,11 @@ function registrasi($data) {
 
 }
 
+function login($data)
+{
+    $_SESSION['roles'] = $role;
+}
+
 function edit($data)
 {
     global $conn;
@@ -115,6 +120,7 @@ function edit($data)
     mysqli_query($conn, $upload);
     return mysqli_affected_rows($conn);   
 }
+
 
 
 

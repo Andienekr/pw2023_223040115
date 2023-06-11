@@ -1,9 +1,11 @@
 <?php
 
 require('../functions.php');
-
 if(empty($_SESSION)) {
   header('Location: ../'); exit;
+}
+if($_SESSION['level'] != 'user'){
+  header("Location: ../admin/admin.php"); 
 }
 ?>
 

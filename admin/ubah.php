@@ -135,9 +135,6 @@ ul li a .fa-angle-down{
         <menu>
           <ul class="menu-content">
             <li><a href="#"><i class="fa fa-home"></i> Dashboard</a></li>
-            <li>
-              <a href="index.php user"><i class="fa fa-cube"></i> <span>Membership</span></a>
-            </li>
             <li><a href="../logout.php"><i class="fa fa-sign-out"></i> <span>Log out</span></a></li>
           </ul>
         </menu>

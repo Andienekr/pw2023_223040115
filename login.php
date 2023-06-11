@@ -21,6 +21,7 @@ if( isset($_POST["submit"]) ) {
         if(password_verify($password, $row["password"]) ) {
 
             $_SESSION['user'] = $row;
+            $_SESSION['level'] = $row['level'];
             
             if($row['level'] == 'admin'){
                 header('Location: ../tubes/admin/admin.php');

@@ -2,10 +2,16 @@
 require('../functions.php');
 
 $news = query("SELECT * FROM news_tubes");
-
 if(empty($_SESSION)) {
   header('Location: ../'); exit;
 }
+if($_SESSION['level'] != 'admin'){
+  header("Location: ../user/user.php"); 
+}
+
+
+
+
 
 if(isset($_POST["upload"])) {
   // var_dump($_POST);
@@ -113,8 +119,17 @@ ul li a .fa-angle-down{
 	.inner{
 		padding: 15px;
 	}
+
+  @media print {
+    .logout, .dashboard {
+      display: none;
+    }
+
+  }
 }
+
 </style>
+
   </head>
   <body>
     <div class="wrapper">
@@ -132,8 +147,8 @@ ul li a .fa-angle-down{
       <aside class="sidebar">
         <menu>
           <ul class="menu-content">
-            <li><a href="#"><i class="fa fa-home"></i> Dashboard</a></li>
-            <li><a href="../logout.php"><i class="fa fa-sign-out"></i> <span>Log out</span></a></li>
+            <li ><a href="#" ><i class="fa fa-home"></i> Dashboard</a></li>
+            <li ><a href="../logout.php" ><i class="fa fa-sign-out"></i> <span>Log out</span></a></li>
           </ul>
         </menu>
       </aside>
@@ -162,9 +177,9 @@ ul li a .fa-angle-down{
                 <td><?= $new["kategori"]; ?></td>
                 <td><?= substr(html_entity_decode($new["deskripsi"]), 0, 100); ?></td>
 
-                <td style= "display:flex;" >
+                <td style= "display:flex;" class="aksi">
 
-                  <a href="delete.php?id=<?= $new["id"] ?>" class= "btn btn-warning btn-sm confirm">HAPUS</a> |
+                  <a href="delete.php?id=<?= $new["id"] ?>" class= "btn btn-warning btn-sm confirm">HAPUS</a> | 
                   <a href="ubah.php?id=<?= $new["id"]; ?>" class= "btn btn-danger btn-sm">UBAH</a>
             
                 </td>
@@ -209,5 +224,6 @@ ul li a .fa-angle-down{
           $('#myTable').DataTable();
       });
     </script>
+  
     </body>
 </html>
